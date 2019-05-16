@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70px;
-    height: 70px;
-    background: #ffffff;
+    width: 75px;
+    height: 75px;
     border: 1px solid #000000;
     font-size: 24px;
     font-weight: bold;
@@ -12,8 +11,20 @@
     color: #000000;
 }
 
+.key:not(:last-child) {
+    margin-right: 5px;
+}
+
 .key:hover {
     cursor: pointer;
-    background: #000000;
+    background: #000000 !important;
     color: #ffffff;
+}
+
+.key.unclicked {
+    background: #ffffff;
+}
+
+.key.clicked {
+    background: #dddddd;
 }

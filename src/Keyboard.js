@@ -10,18 +10,24 @@ class Keyboard extends React.Component {
         };
     }
 
+    generateKeys(keys) {
+        return keys.map((value, index) => (
+            <Key value={value}
+                key={index}
+                index={index}
+                feedback={this.props.getFeedbackKey(value)}
+                onClick={this.props.onKeyClick}
+            />
+        ));
+    }
+
     render() {
         return (
             <div className="keyboard">
-            {
-                this.props.alphabet.map((value, index) => (
-                    <Key value={value}
-                        key={index}
-                        index={index}
-                        onClick={this.props.onKeyClick}
-                    />
-                ))
-            }
+                <div className="keyRow top">{this.generateKeys(this.props.keys.top)}</div>
+                <div className="keyRow middle">{this.generateKeys(this.props.keys.middle)}</div>
+                <div className="keyRow bottom">{this.generateKeys(this.props.keys.bottom)}</div>
+                <button className="restart" onClick={this.props.reset}>RESET</button>
             </div>
         )
     }

@@ -1,9 +1,9 @@
 import React from 'react';
 import './Key.css';
 
-function Key({value, onClick}) {
+function Key({value, feedback, onClick}) {
     return (
-        <div className="key" onClick={() => onClick(value)}>
+        <div className={`key ${feedback}`} onClick={() => onClick(value)}>
             {value}
         </div>
     );
