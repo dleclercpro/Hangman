@@ -4,11 +4,13 @@ import Keyboard from './Keyboard';
 import RandomWords from 'random-words';
 import './App.css';
 
-const KEYS = {
+const KEYBOARD = {
     top: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     middle: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     bottom: ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
 };
+
+const KEYS = [...KEYBOARD.top, ...KEYBOARD.middle, ...KEYBOARD.bottom];
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +21,14 @@ class App extends React.Component {
             matchedCharacters: [],
             clickedKeys: [],
         };
+    }
+
+    componentDidMount() {
+        document.addEventListener("keydown", this.handleKeyDown, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.handleKeyDown, false);
     }
 
     reset = () => {
@@ -60,6 +70,22 @@ class App extends React.Component {
         }
     }
 
+    handleKeyDown = (e) => {
+        
+        // Get key pressed
+        const key = e.key.toUpperCase();
+
+        // Reset
+        if (key === " ") {
+            this.reset();
+        }
+
+        // If key within available within keyboard, handle as click
+        if (KEYS.includes(key)) {
+            this.handleKeyClick(key);
+        }
+    }
+
     getFeedbackCharacter = (c) => {
 
         // Lower case character
@@ -95,7 +121,7 @@ class App extends React.Component {
         return (
             <React.Fragment>
                 <Word value={this.state.word} feedback={this.getFeedbackWord()} getFeedbackCharacter={this.getFeedbackCharacter} />
-                <Keyboard keys={KEYS} reset={this.reset} getFeedbackKey={this.getFeedbackKey} onKeyClick={this.handleKeyClick} />
+                <Keyboard keys={KEYBOARD} reset={this.reset} getFeedbackKey={this.getFeedbackKey} onKeyClick={this.handleKeyClick}/>
             </React.Fragment>
         );
     }
