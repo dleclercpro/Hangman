@@ -1,20 +1,26 @@
 import React from 'react';
 import Word from './Word';
 import Keyboard from './Keyboard';
+import RandomWords from 'random-words';
 import './App.css';
 
-const keys = {
+const KEYS = {
     top: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     middle: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     bottom: ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
 };
 
+const WORD = RandomWords({
+    exactly: 1,
+    maxLength: 14,
+})[0];
+
 class App extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
-            word: "Testing",
+            word: WORD,
             matchedCharacters: [],
             clickedKeys: [],
         };
@@ -22,7 +28,7 @@ class App extends React.Component {
 
     reset = () => {
         this.setState({
-            word: "Testing",
+            word: WORD,
             matchedCharacters: [],
             clickedKeys: [],
         });
@@ -50,7 +56,7 @@ class App extends React.Component {
         // New character in word discovered
         if (!this.state.matchedCharacters.includes(c) && word.includes(c)) {
             let newMatchedCharacters = this.state.matchedCharacters;
-            
+
             newMatchedCharacters = newMatchedCharacters.concat(c);
 
             this.setState({
@@ -75,11 +81,19 @@ class App extends React.Component {
         return this.state.clickedKeys.includes(c) ? 'clicked' : 'unclicked';
     }
 
+    wasCharacterFound = (c) => {
+        return this.state.matchedCharacters.includes(c);
+    }
+
+    getFeedbackWord() {
+        return this.state.word.toLowerCase().split("").every(this.wasCharacterFound) ? 'done' : 'undone';
+    }
+
     render() {
         return (
             <React.Fragment>
-                <Word value={this.state.word} getFeedbackCharacter={this.getFeedbackCharacter} />
-                <Keyboard keys={keys} reset={this.reset} getFeedbackKey={this.getFeedbackKey} onKeyClick={this.handleKeyClick} />
+                <Word value={this.state.word} feedback={this.getFeedbackWord()} getFeedbackCharacter={this.getFeedbackCharacter} />
+                <Keyboard keys={KEYS} reset={this.reset} getFeedbackKey={this.getFeedbackKey} onKeyClick={this.handleKeyClick} />
             </React.Fragment>
         );
     }

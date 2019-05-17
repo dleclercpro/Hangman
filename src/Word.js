@@ -12,7 +12,7 @@ class Word extends React.Component {
 
     render() {
         return (
-            <div className="word">
+            <div className={`word ${this.props.feedback}`}>
                 {
                     this.props.value.split("").map((value, index) => (
                         <Character value={value}
