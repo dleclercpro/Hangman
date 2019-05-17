@@ -10,17 +10,12 @@ const KEYS = {
     bottom: ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
 };
 
-const WORD = RandomWords({
-    exactly: 1,
-    maxLength: 14,
-})[0];
-
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            word: WORD,
+            word: this.getWord(),
             matchedCharacters: [],
             clickedKeys: [],
         };
@@ -28,7 +23,7 @@ class App extends React.Component {
 
     reset = () => {
         this.setState({
-            word: WORD,
+            word: this.getWord(),
             matchedCharacters: [],
             clickedKeys: [],
         });
@@ -87,6 +82,13 @@ class App extends React.Component {
 
     getFeedbackWord() {
         return this.state.word.toLowerCase().split("").every(this.wasCharacterFound) ? 'done' : 'undone';
+    }
+
+    getWord() {
+        return RandomWords({
+            exactly: 1,
+            maxLength: 14,
+        })[0];
     }
 
     render() {
