@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Character.css';
 
 function Character({value, feedback}) {
@@ -8,5 +9,10 @@ function Character({value, feedback}) {
         </div>
     );
 }
+
+Character.propTypes = {
+    value: PropTypes.string.isRequired,
+    feedback: PropTypes.string.isRequired,
+};
 
 export default Character;

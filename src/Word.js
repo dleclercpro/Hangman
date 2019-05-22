@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Character from './Character';
 import './Word.css';
 
@@ -25,5 +26,11 @@ class Word extends React.Component {
         );
     }
 }
+
+Word.propTypes = {
+    value: PropTypes.string.isRequired,
+    feedback: PropTypes.string.isRequired,
+    getFeedbackCharacter: PropTypes.func.isRequired,
+};
 
 export default Word;

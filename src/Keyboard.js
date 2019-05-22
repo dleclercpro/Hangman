@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Key from './Key';
 import './Keyboard.css';
 
@@ -14,7 +15,6 @@ class Keyboard extends React.Component {
         return keys.map((value, index) => (
             <Key value={value}
                 key={index}
-                index={index}
                 feedback={this.props.getFeedbackKey(value)}
                 onClick={this.props.onKeyClick}
             />
@@ -32,5 +32,16 @@ class Keyboard extends React.Component {
         )
     }
 }
+
+Keyboard.propTypes = {
+    keys: PropTypes.shape({
+        top: PropTypes.arrayOf(PropTypes.string).isRequired,
+        middle: PropTypes.arrayOf(PropTypes.string).isRequired,
+        bottom: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
+    reset: PropTypes.func.isRequired,
+    getFeedbackKey: PropTypes.func.isRequired,
+    onKeyClick: PropTypes.func.isRequired,
+};
 
 export default Keyboard;
